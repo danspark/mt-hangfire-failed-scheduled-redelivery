@@ -18,13 +18,13 @@ builder.Services.AddMassTransit(mt =>
     {
         rmq.Host("localhost");
 
-        rmq.ConfigureEndpoints(context);
-        
         rmq.UseScheduledRedelivery(retry =>
         {
             retry.Handle<Exception>();
             retry.Intervals(TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(5));
         });
+        
+        rmq.ConfigureEndpoints(context);
     });
 });
 
